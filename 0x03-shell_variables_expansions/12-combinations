@@ -1,2 +1,2 @@
 #!/bin/bash
-echo {a..z}{a..z}
+echo -n oo {a..z}{a..z}
