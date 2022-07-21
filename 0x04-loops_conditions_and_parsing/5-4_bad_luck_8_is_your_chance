@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script loops from 1 to 10 and
 
 i=0
