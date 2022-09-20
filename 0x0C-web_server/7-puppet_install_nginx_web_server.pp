@@ -15,7 +15,7 @@ file { '/var/www/html/index.html':
   content => 'Hello World!',
 }
 
-siervice { 'nginx':
+service { 'nginx':
   ensure  => running,
   require => Package['nginx'],
 }
