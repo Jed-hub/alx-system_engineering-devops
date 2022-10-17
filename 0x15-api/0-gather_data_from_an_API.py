@@ -28,6 +28,6 @@ if __name__ == "__main__":
         if obj.get('completed'):
             completed_tasks.append(obj)
             completed += 1
-    print("{} is done with tasks({}/{}):".format(name, completed, len(objs)))
+    print("Employee {} is done with tasks({}/{}):".format(name, completed, len(objs)))
     for task in completed_tasks:
         print("\t {}".format(task.get('title')))
