@@ -1,34 +1,31 @@
 #!/usr/bin/python3
-"""script for parsing web data from an api
 """
+    using a REST API, for a given employee ID
+    returns information about his/her TODO list progress
+"""
+
+import requests
+from sys import argv
+
+
 if __name__ == "__main__":
-    import json
-    import requests
-    import sys
-    base_url = 'https://jsonplaceholder.typicode.com/'
-    try:
-        employee_id = sys.argv[1]
-    except:
-        print('Usage: {} employee_id'.format(sys.argv[0]))
-        exit(1)
-
-    url = base_url + 'users?id={}'.format(employee_id)
-    response = requests.get(url)
-    user = json.loads(response.text)
-    name = user[0].get('name')
-
-    url = base_url + 'todos?userId={}'.format(employee_id)
-    response = requests.get(url)
-    objs = json.loads(response.text)
-    completed = 0
-    completed_tasks = []
-    for obj in objs:
-        if obj.get('completed'):
-            completed_tasks.append(obj)
-            completed += 1
-
-    print("Employee {} is done with tasks({}/{}):".
-        format(name, completed, len(objs)))
-
-    for task in completed_tasks:
-        print("\t {}".format(task.get('title')))
+    if len(argv) > 1:
+        userId = int(argv[1])
+        url = "https://jsonplaceholder.typicode.com/users/"
+        r = requests.get("{}/{}".format(url, userId))
+        data = r.json()
+        name = r.json().get("name")
+        if name is not None:
+            userTodos = requests.get("{}{}/todos".format(url, userId))
+            userTodos = userTodos.json()
+            taskNumber = len(userTodos)
+            completedTasks = []
+            for task in userTodos:
+                if task.get("completed") is True:
+                    completedTasks.append(task)
+            taskCompletedNumber = len(completedTasks)
+            print("Employee {} is done with tasks({}/{}):"
+                  .format(name, taskCompletedNumber, taskNumber))
+            for task in completedTasks:
+                title = task.get("title")
+                print("\t {}".format(title))
