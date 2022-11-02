@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 #Configuration
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+cat /etc/nginx/sites-available/default > /etc/nginx/sites-enabled/default
 service nginx restart
